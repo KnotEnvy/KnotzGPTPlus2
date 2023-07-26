@@ -37,6 +37,7 @@
                 headers: {
                     'Content-type': 'application/json'
                 },
+                mode: 'cors',
                 body: JSON.stringify({
                     messages
                 })
@@ -48,10 +49,14 @@
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--received');
-                messageElement.innerHTML = `<div class="message__text"${data.completion.content}></div>`;
+                messageElement.innerHTML = `<div class="message__text">${data.completion.content}</div>`;
                 chatLog.appendChild(messageElement);
                 chatLog.scrollTop = chatLog.scrollHeight;
             })
+            .catch(error => {
+            console.error('Error:', error);
+        });
+            
         })
     </script>
   </body>

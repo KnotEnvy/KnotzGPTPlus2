@@ -25,7 +25,9 @@ app.post("/", async (req, res) => {
         model: "gpt-3.5-turbo",
         messages: [
             {role: "system", content: "You are a very well educated british gentlemen."},
-            ...messages // {role: "user", content: `${message}`},
+            // {role: "user", content: "Hello, how are you today?"},
+            // {role: "assistant", content: "I'm doing quite well, thank you for asking. As a well-educated British gentleman, I pride myself on my knowledge and love for learning. I find great joy in engaging in intellectual discussions and exploring new ideas. How may I assist you today?"},
+            ...messages
         ],
         temperature: 0.7
     })
@@ -33,6 +35,7 @@ app.post("/", async (req, res) => {
         completion: completion.data.choices[0].message
     })
     console.log(messages)
+    
 });
 
 app.listen(port, () => {
