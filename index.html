@@ -1,63 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="./jay-logo3.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KnotzGPT-Expert Edition</title>
-</head>
-<body>
-    <main>
-        <h1>KnotzGPT-Expert Edition</h1>  
-        <form action="" id="form">
-            <input type="text" id="message" name="message"  aria-label=“Enter your message”/>
-            <button type="submit">Send</button>
-        </form>
-        <div id="chat-log"></div>
-    </main>
-	<script>
-        let messages= []
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    </style>
+  </head>
+  <body>
+    <div class="App">
+      <aside class="sidemenu">
+        <h1>KnotzGPT-Expert Edition</h1>
+        <div class="side-menu-button">
+          <span>+</span>
+          Get Started!
+        </div>
+      </aside>
+      <section class="chatbox">
+        <div id="chat-log" class="chat-log"></div>
+        <div class="chat-input-holder">
+          <form action="" id="form">
+            <input
+              type="text"
+              id="message"
+              name="message"
+              aria-label="Enter your message"
+              class="chat-input-textarea"
+              rows="1"
+              placeholder="Type Your Prompt Here"
+            />
+          </form>
+        </div>
+      </section>
+    </div>
+    <script>
+        let messages = [];
         const chatLog = document.getElementById('chat-log');
         const message = document.getElementById('message');
         const form = document.getElementById('form');
         form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const messageText = message.value;
-            const newMessage = {"role": "user", "content": `${messageText}`}
-            messages.push(newMessage)
-            message.value = '';
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.classList.add('message--sent');
-            messageElement.innerHTML = `<div class="message__text">${messageText}</div>`;
-            chatLog.appendChild(messageElement);
-            chatLog.scrollTop =chatLog.scrollHeight;
-            fetch('http://localhost:4009', {
-                method:'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                mode: 'cors',
-                body: JSON.stringify({
-                    messages
-                })
+          e.preventDefault();
+          const messageText = message.value;
+          const newMessage = { role: 'user', content: `${messageText}` };
+          messages.push(newMessage);
+          message.value = '';
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.classList.add('message--sent');
+          messageElement.innerHTML = `<div class="message__text">${messageText}</div>`;
+          chatLog.appendChild(messageElement);
+          chatLog.scrollTop = chatLog.scrollHeight;
+          fetch('http://localhost:4009', {
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+            },
+            mode: 'cors',
+            body: JSON.stringify({
+              messages,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              let newAssistantMessage = {
+                role: 'assistant',
+                content: `${data.completion.content}`,
+              };
+              messages.push(newAssistantMessage);
+              const messageElement = document.createElement('div');
+              messageElement.classList.add('message');
+              messageElement.classList.add('message--received');
+              messageElement.innerHTML = `<img src="./jay-logo3.png" alt=""><div class="message__text">${data.completion.content}</div>`;
+              chatLog.appendChild(messageElement);
+              chatLog.scrollTop = chatLog.scrollHeight;
             })
-            .then(res => res.json())
-            .then(data => {
-                let newAssistantMessage = {"role": "assistant", "content": `${data.completion.content}`}
-                messages.push(newAssistantMessage)
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                messageElement.classList.add('message--received');
-                messageElement.innerHTML = `<div class="message__text">${data.completion.content}</div>`;
-                chatLog.appendChild(messageElement);
-                chatLog.scrollTop = chatLog.scrollHeight;
-            })
-            .catch(error => {
-            console.error('Error:', error);
+            .catch((error) => {
+              console.error('Error:', error);
+            });
         });
-            
-        })
-    </script>
-  </body>
+      </script>
+    </body>
 </html>
