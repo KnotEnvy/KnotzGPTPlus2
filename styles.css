@@ -17,7 +17,7 @@
 .sidemenu {
   flex: 0 0 25vw; /* 25% of the viewport width */
   min-width: 25vw; /* Minimum width of 260px */
-  max-width: 25vw; /* Maximum width of 25% of the viewport width */
+  max-width: 260px; /* Maximum width of 25% of the viewport width */
   padding: 15px;
   background-color: #202123;
 }
@@ -29,6 +29,7 @@ h1 {
 
 .side-menu-button {
   padding: 15px;
+  margin-bottom: 10px; /* Add margin between menu items */
   border: 1px solid rgb(132, 73, 199);
   border-radius: 5px;
   text-align: left;
@@ -118,5 +119,75 @@ h1 {
 .chat-message .avatar {
   background: rgb(52, 141, 44);
   border-radius: 50%;
-  width:
+
+}
+
+label {
+  margin-top: 10px;
+  color: #a3a3a3;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+  -webkit-appearance: none;
+  background-color: #333;
+  height: 6px;
+  border-radius: 4px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #888;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #888;
+  cursor: pointer;
+}
+
+/* Temperature and Token Count meters */
+meter {
+  margin-top: 5px;
+}
+
+/* System start prompt input */
+input[type="text"] {
+  width: 100%;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #41414d;
+  color: aquamarine;
+
+  font-size: larger;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 8px 8px 0px;
+  resize: vertical;
+
+}
+
+/* Save Context button */
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #6b3bd0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #5329a2;
 }

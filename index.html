@@ -17,6 +17,24 @@
           <span>+</span>
           Get Started!
         </div>
+        <label for="temperature">Temperature:</label>
+        <meter id="temperature-meter" min="0" max="2" value="0.7"></meter>
+        <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" />
+
+        <!-- Token count slider and meter -->
+        <label for="token-count">Token Count:</label>
+        <meter id="token-count-meter" min="0" max="4000" value="125"></meter>
+        <input type="range" id="token-count" min="0" max="4000" step="50" value="125" />
+
+        <!-- System start prompt input -->
+        <label for="system-prompt">System Start Prompt:</label>
+        <input type="text" id="system-prompt" placeholder="Magic Context happens here!" />
+
+        <!-- Save Context button -->
+        <button id="save-context-btn">Save Context</button>
+        <button id="createEmbedding">Create Embedding</button>
+        <button id="createEmbedding">Add to DB</button>
+        <button id="botPurpose">Bots Purpose using Knotz Templates</button>
       </aside>
       <section class="chatbox">
         <div class="chat-container">
@@ -32,7 +50,7 @@
                 aria-label="Enter your message"
                 class="chat-input-textarea"
                 rows="1"
-                placeholder="Type Your Prompt Here"
+                placeholder="Enter your message"
               />
             </form>
           </div>
@@ -83,6 +101,19 @@
             .catch((error) => {
               console.error('Error:', error);
             });
+        });
+        // Update temperature and tokens values above sliders
+        const temperatureSlider = document.getElementById("temperature");
+        const tokensSlider = document.getElementById("tokens");
+        const temperatureValue = document.getElementById("temperatureValue");
+        const tokensValue = document.getElementById("tokensValue");
+
+        temperatureSlider.addEventListener("input", () => {
+          temperatureValue.textContent = temperatureSlider.value;
+        });
+
+        tokensSlider.addEventListener("input", () => {
+          tokensValue.textContent = tokensSlider.value;
         });
       </script>
     </body>

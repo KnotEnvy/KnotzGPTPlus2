@@ -29,7 +29,8 @@ app.post("/", async (req, res) => {
             // {role: "assistant", content: "I'm doing quite well, thank you for asking. As a well-educated British gentleman, I pride myself on my knowledge and love for learning. I find great joy in engaging in intellectual discussions and exploring new ideas. How may I assist you today?"},
             ...messages
         ],
-        temperature: 0.7
+        temperature: 0.7,
+        tokens: 125
     })
     res.json({
         completion: completion.data.choices[0].message
