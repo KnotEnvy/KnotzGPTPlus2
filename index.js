@@ -17,26 +17,40 @@ const port = 4009
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/", async (req, res) => {
+let systemPrompt = "You are a very well educated british gentlemen.";
 
-    const { messages } = req.body;
+app.post("/save-context", (req, res) => {
+    const { systemPrompt: newSystemPrompt } = req.body;
     
-    const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-            {role: "system", content: "You are a very well educated british gentlemen."},
-            // {role: "user", content: "Hello, how are you today?"},
-            // {role: "assistant", content: "I'm doing quite well, thank you for asking. As a well-educated British gentleman, I pride myself on my knowledge and love for learning. I find great joy in engaging in intellectual discussions and exploring new ideas. How may I assist you today?"},
-            ...messages
-        ],
-
-    })
+    // Update system prompt
+    systemPrompt = newSystemPrompt;
+    
     res.json({
-        completion: completion.data.choices[0].message
-    })
-    console.log(messages)
-    
+        message: "System prompt updated successfully"
+    });
 });
+
+app.post("/", async (req, res) => {
+    const { messages, temperature, tokenCount } = req.body;
+    
+     // Log values received by server
+     console.log(`Received temperature: ${temperature}, tokenCount: ${tokenCount}`);
+     
+     const completion = await openai.createChatCompletion({
+         model: "gpt-3.5-turbo",
+         messages: [
+             {role: "system", content: systemPrompt},
+             ...messages
+         ],
+         temperature,
+         max_tokens: tokenCount
+     })
+     res.json({
+         completion: completion.data.choices[0].message
+     })
+     console.log(messages)
+});
+
 
 app.listen(port, () => {
     console.log(`Your app is listening at http://localhost:${port}`)

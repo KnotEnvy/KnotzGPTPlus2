@@ -14,21 +14,30 @@ form.addEventListener('submit', (e) => {
     messageElement.innerHTML = `<div class="message__text">${messageText}</div>`;
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
+
+    // Get temperature and token count values from sliders
+    const temperature = parseFloat(document.getElementById("temperature").value);
+    const tokenCount = parseInt(document.getElementById("token-count").value);
+    // Log values being sent to server
+    console.log(`Sending temperature: ${temperature}, tokenCount: ${tokenCount}`);
     fetch('http://localhost:4009', {
-    method: 'POST',
-    headers: {
-        'Content-type': 'application/json',
-    },
-    mode: 'cors',
-    body: JSON.stringify({
-        messages,
-    }),
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify({
+            messages,
+            temperature,
+            tokenCount,
+
+        }),
     })
     .then((res) => res.json())
     .then((data) => {
         let newAssistantMessage = {
-        role: 'assistant',
-        content: `${data.completion.content}`,
+            role: 'assistant',
+            content: `${data.completion.content}`,
         };
         messages.push(newAssistantMessage);
         const messageElement = document.createElement('div');
@@ -42,16 +51,43 @@ form.addEventListener('submit', (e) => {
         console.error('Error:', error);
     });
 });
-// Update temperature and tokens values above sliders
+
+// Update temperature and token count values above sliders
 const temperatureSlider = document.getElementById("temperature");
-const tokensSlider = document.getElementById("tokens");
-const temperatureValue = document.getElementById("temperatureValue");
-const tokensValue = document.getElementById("tokensValue");
+const tokenCountSlider = document.getElementById("token-count");
+const temperatureValue = document.getElementById("temperature-value");
+const tokenCountValue = document.getElementById("token-count-value");
 
 temperatureSlider.addEventListener("input", () => {
     temperatureValue.textContent = temperatureSlider.value;
 });
 
-tokensSlider.addEventListener("input", () => {
-    tokensValue.textContent = tokensSlider.value;
+tokenCountSlider.addEventListener("input", () => {
+    tokenCountValue.textContent = tokenCountSlider.value;
+});
+
+// Add event listener to "Save Context" button
+const saveContextBtn = document.getElementById("save-context-btn");
+const systemPromptInput = document.getElementById("system-prompt");
+
+saveContextBtn.addEventListener("click", () => {
+    const systemPrompt = systemPromptInput.value;
+
+    fetch('http://localhost:4009/save-context', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify({
+            systemPrompt
+        }),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 });
