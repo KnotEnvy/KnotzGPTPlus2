@@ -1,8 +1,8 @@
 /* General styles */
 .App {
   display: flex;
-  height: 100vh; /* Full height of the viewport */
-  max-width: 100%; /* Make sure the app doesn't exceed the viewport width */
+  height: 100vh; 
+  max-width: 100%; 
   text-align: center;
   background-color: #282c34;
   color: rgb(244, 235, 235);
@@ -15,9 +15,9 @@
 
 /* Sidemenu styles */
 .sidemenu {
-  flex: 0 0 25vw; /* 25% of the viewport width */
-  min-width: 25vw; /* Minimum width of 260px */
-  max-width: 260px; /* Maximum width of 25% of the viewport width */
+  flex: 0 0 25vw; 
+  min-width: 25vw; 
+  max-width: 260px;
   padding: 15px;
   background-color: #202123;
 }
@@ -29,7 +29,7 @@ h1 {
 
 .side-menu-button {
   padding: 15px;
-  margin-bottom: 10px; /* Add margin between menu items */
+  margin-bottom: 10px; 
   border: 1px solid rgb(132, 73, 199);
   border-radius: 5px;
   text-align: left;
@@ -48,20 +48,20 @@ h1 {
 
 /* Chatbox styles */
 .chatbox {
-  flex: 1; /* Take remaining available width */
+  flex: 1; 
   display: flex;
   flex-direction: column;
-  position: relative; /* Add relative positioning to the chatbox container */
+  position: relative; 
 }
 .chat-container {
-  flex: 1; /* Take remaining available height */
+  flex: 1; 
   padding: 24px;
   overflow-y: auto;
 }
 
 /* Chat log styles */
 .chat-log {
-  flex: 1; /* Take remaining available height */
+  flex: 1; 
   padding: 24px;
 }
 
