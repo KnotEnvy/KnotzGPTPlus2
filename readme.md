@@ -14,7 +14,7 @@ The backend (`index.js`) is an express server that receives API calls from the f
 1. Clone this repository to your local machine:
 
     ```sh
-    git clone <repository url>
+    git clone https://github.com/KnotEnvy/KnotzGPTPlus2
     ```
 
 2. Install the necessary dependencies:
