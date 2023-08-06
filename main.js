@@ -91,3 +91,76 @@ saveContextBtn.addEventListener("click", () => {
         console.error('Error:', error);
     });
 });
+
+// Get existing botPurpose button
+const botPurposeBtn = document.getElementById('botPurpose');
+
+// Get modal overlay
+const modal = document.getElementById('bot-personalities-modal');
+
+// Open modal when button clicked
+botPurposeBtn.addEventListener('click', () => {
+  modal.style.display = 'block';
+})
+
+// Close modal
+const closeBtn = document.getElementById('close-modal');
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+})
+// Get chosen personality
+const personalities = document.querySelectorAll('.personality');
+
+
+personalities.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    const name = btn.dataset.name;
+    
+    // Call API to update
+    fetch('/update-personality', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name}) 
+    })
+    .then(res => {
+      modal.style.display = 'none';
+      // Update sliders
+    temperatureSlider.value = personality.temperature; 
+    tokenSlider.value = personality.tokens;
+
+    // Show notification 
+    showNotification(`Personality changed to ${name}!`);
+    
+    // Change avatar image
+    // avatarImg.src = `${name}.png`;
+
+    // Update displayed prompt
+    promptText.innerText = personality.prompt;
+    
+
+    })
+
+  })
+})
+// Display notification
+function showNotification(text) {
+
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerText = text;
+  
+    chatContainer.appendChild(notification);
+  
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+  
+  }
+  
+  // Get references
+//   const avatarImg = document.querySelector('.avatar');
+  const promptText = document.querySelector('.prompt-text');

@@ -55,3 +55,36 @@ app.post("/", async (req, res) => {
 app.listen(port, () => {
     console.log(`Your app is listening at http://localhost:${port}`)
 })
+
+
+// Bot personalities  
+let personalities = {
+    Professional: {
+      prompt: "You are a very knowledgeable chatbot",
+      temperature: 0.5,
+      tokens: 1000
+    },
+    CustomerService: {
+      prompt: "You are a casual conversationalist",
+      temperature: 1, 
+      tokens: 300
+    }
+  };
+  
+  app.post('/update-personality', (req, res) => {
+    const {name} = req.body;
+  
+    const personality = personalities[name];
+  
+    // Update values
+    systemPrompt = personality.prompt;
+    temperature = personality.temperature;
+    tokens = personality.tokens;
+    // Update slider values 
+    io.emit('update-sliders', {
+        temperature: personality.temperature,
+        tokens: personality.tokens
+    });
+  
+    res.send('Personality updated!');
+  })
